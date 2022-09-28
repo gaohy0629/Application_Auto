@@ -25,11 +25,11 @@ def login(self):
 class TestHR():
     def setup(self):
         playwright = sync_playwright().start()
-        self.browser = playwright.chromium.launch(headless=False,args=["--start-maximized"])
+        self.browser = playwright.chromium.launch(headless=False, args=["--start-maximized"])
         # self.context = self.browser.new_context()
         # self.context = self.browser.new_context(viewport={"width": 1920, "height": 1080}
         #                                         )
-        self.context = self.browser.new_context(no_viewport = True)
+        self.context = self.browser.new_context(no_viewport=True)
 
         # Open new page
         self.page = self.context.new_page()
@@ -37,35 +37,32 @@ class TestHR():
     def test_delivery_record(self):
         login(self)
         print('投递记录测试开始：')
-        # # Click text=HR招聘系统  进入招聘系统
-        locator=self.page.locator("div:nth-child(12) > .iconWrapper___14jI8")
+        # 进入招聘系统
+        locator = self.page.locator("div:nth-child(12) > .iconWrapper___14jI8")
         locator.hover()
         locator.click()
-        # time.sleep()
-
-        # Click .ant-select-selection-overflow >> nth=0
-
+        # 鼠标悬停应用首页
         self.page.locator("text=应用首页").hover()
+        time.sleep(30)
+        # 测试投递记录列表
 
-
-
-        # Click button:has-text("新增") >> nth=1  新增投递记录
+        # 新增投递记录
         self.page.locator("button:has-text(\"新增\")").nth(1).click()
         time.sleep(3)
-        # Click [placeholder="请输入姓名"]
+        # 输入姓名
         self.page.locator("[placeholder=\"请输入姓名\"]").fill('雷粒')
         time.sleep(3)
-        # # Fill #phone_number
+        # 输入手机号
         self.page.locator("#phone_number").fill("1901111")
-        # Click #school_name
-        # self.page.locator("#school_name").fill('浙江万里学院')
-        # time.sleep(3)
+        # 输入学校
+        self.page.locator("#school_name").fill('浙江万里学院')
+        # 选择性别
 
-        # Click text=简历来源请选择一条数据 >> input[role="combobox"]
+        # 选择简历来源，搜索：前程无忧
         self.page.locator("text=简历来源请选择一条数据 >> input[role=\"combobox\"]").click()
         time.sleep(3)
-        self.page.locator("text=简历来源请选择一条数据 >> input[role=\"combobox\"]").fill("自己搜索(BOSS)")
-        self.page.locator(".ant-select-item-option-content").locator('text=自己搜索(BOSS)').click()
+        self.page.locator("text=简历来源请选择一条数据 >> input[role=\"combobox\"]").fill("前程无忧")
+        self.page.locator(".ant-select-item-option-content").locator('text=前程无忧').click()
 
         time.sleep(2)
         # 选择实际沟通职位
@@ -75,37 +72,15 @@ class TestHR():
         # Click button:has-text("确认")
         self.page.locator("button:has-text(\"确认\")").click()
         time.sleep(2)
-
-        # self.page.select_option('ant-select-selector', label='前程无忧')
-        # # self.page.locator("div:nth-child(46) > .ant-select-item-option-content").click()
-
-        # Click div:nth-child(6) > .ant-select-item-option-content
-        # self.page.locator("div:nth-child(6) > .ant-select-item-option-content").click()
-        # Click button:has-text("提交")
+        # 点击提交
         self.page.locator("button:has-text(\"提交\")").click()
-        # Click text=搜索人不能为空！
-        locator= self.page.locator("text=搜索人不能为空！")
+        # # Click text=搜索人不能为空！
+        # locator = self.page.locator("text=搜索人不能为空！")
+        # assert locator
+        # print(self.page.locator("text=搜索人不能为空！"))
+        locator = self.page.locator("text=雷粒")
         assert locator
-        print(self.page.locator("text=搜索人不能为空！"))
-
-        # self.page.locator("text=HR招聘系统").click()
-        # expect(page).to_have_url("https://app.dangquyun.com/tabs/3a01f867-29ce-a184-ed7b-957802f9b2ae/dynamicApp/3a03ddf4-6bdb-0cfe-c168-37fd57af0a3d/pagedetail/3a022ddc-19e0-9d3d-a0e6-10e251f5560e/host")
-        # Click text=RR20220900002  点击投递记录
-        # self.page.locator("text=RR20220900005").click()
-        # time.sleep(5)
-        # self.page.click('[type="checkbox"][value="Click me"]')  # 点击checkbox
-        # # assert self.page.is_checked('[type="checkbox"][value="Click me"]') is True
-        # assert self.page.is_checked("[type = 'checkbox'][value='是']") is True
-        # # Click button:has-text("提交")
-        # self.page.locator("button:has-text(\"提交\")").click()
-        # time.sleep(5)
-        # 点击左边显示菜单列表
-        # self.page.click('//*[@id="root-master"]/section/aside/div/div/div/div/div[2]/div/div/div[2]/div[3]')
-
-
 
     def teardown(self):
         time.sleep(10)
         self.page.close()
-
-

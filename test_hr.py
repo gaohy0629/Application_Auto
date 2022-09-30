@@ -43,10 +43,11 @@ class TestHR():
         locator.click()
         # 鼠标悬停应用首页
         self.page.locator("text=应用首页").hover()
-        time.sleep(30)
+        time.sleep(5)
         # 测试投递记录列表
-
+        print('投递记录列表没有报错，测试完成')
         # 新增投递记录
+        print('新增投递记录')
         self.page.locator("button:has-text(\"新增\")").nth(1).click()
         time.sleep(3)
         # 输入姓名
@@ -56,7 +57,7 @@ class TestHR():
         self.page.locator("#phone_number").fill("1901111")
         # 输入学校
         self.page.locator("#school_name").fill('浙江万里学院')
-        # 选择性别
+        # 选择求职状态
 
         # 选择简历来源，搜索：前程无忧
         self.page.locator("text=简历来源请选择一条数据 >> input[role=\"combobox\"]").click()
@@ -80,6 +81,32 @@ class TestHR():
         # print(self.page.locator("text=搜索人不能为空！"))
         locator = self.page.locator("text=雷粒")
         assert locator
+        print('投递记录新增成功')
+
+        time.sleep(2)
+        # 进入简历库列表
+        print('简历库列表正常，没有报错')
+        self.page.locator("div:nth-child(2) > div:nth-child(5)").click()
+        time.sleep(3)
+        # Click text=雷粒
+        self.page.locator("text=简历库").first.click()
+        time.sleep(5)
+        # Click text=雷粒
+        self.page.locator("text=雷粒").click()
+        time.sleep(3)
+        # Click span:has-text("面试结果")
+        self.page.locator("span:has-text(\"面试结果\")").click()
+        time.sleep(3)
+
+        # Click button:has-text("新增") >> nth=1
+        self.page.locator("button:has-text(\"新增\")").nth(1).click()
+
+        # Click #drawer-qmyetuyw button:has-text("提交")
+        self.page.locator("#drawer-qmyetuyw button:has-text(\"提交\")").click()
+        # Click text=提交成功
+        self.page.locator("text=提交成功").click()
+
+
 
     def teardown(self):
         time.sleep(10)

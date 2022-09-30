@@ -20,6 +20,12 @@ def login(self):
     with self.page.expect_navigation():
         self.page.locator("button:has-text(\"登录\")").click()
     time.sleep(5)
+    time.sleep(50)
+    time.sleep(50)
+    time.sleep(50)
+    time.sleep(50)
+    time.sleep(50)
+    time.sleep(50)
 
 
 class TestHR():
